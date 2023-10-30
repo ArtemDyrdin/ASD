@@ -19,7 +19,7 @@ int main() {
     std::string number;
     bool after_operator = false; // флажок если предыдущий элемент был оператор
     int brackets = 0; // счетчик-баланс скобочек
-    bool is_open_bracket = false; // флажок о наличии открывающей скобки
+    int is_open_bracket = 0; // флажок о наличии открывающей скобки
     bool is_close_bracket = false; // флажок о наличии закрывающей скобки
 
     try {
@@ -29,19 +29,19 @@ int main() {
                 after_operator = false;
 
             } else if (c == '(') {
-                is_open_bracket = true;
+                is_open_bracket++;
                 brackets++;
                 put_full_number(number); // c - оператор -> число закончилось
                 operators.push_back(c);
-                after_operator = true;
+//                after_operator = true;
 
             } else if (c == ')') { // если c - закрывающая скобка, то вычисляем выражение в скобках
-                if (!is_open_bracket) {
+                if (is_open_bracket == 0) {
                     std::cerr << "Brackets didn't put correctly!" << std::endl;
                     return 0;
                 }
                 is_close_bracket = true;
-                is_open_bracket = false;
+                is_open_bracket--;
                 brackets--;
                 put_full_number(number); // c - оператор -> число закончилось
                 while (!operators.empty() &&
@@ -70,7 +70,7 @@ int main() {
                     }
                 }
                 operators.pop_back(); // удаляем открывающую скобку
-                after_operator = true;
+//                after_operator = true;
 
             } else if (c == '+' || c == '-' || c == '*' || c == '/') { // если c - оператор
                 if (after_operator) {
@@ -110,9 +110,6 @@ int main() {
                 if (brackets != 0) {
                     std::cerr << "Brackets didn't put correctly!" << std::endl;
                     return 0;
-                } else if (is_close_bracket) {
-                    std::cerr << "Brackets didn't put correctly!" << std::endl;
-                    return 0;
                 }
 
                 put_full_number(number); // c - оператор -> число закончилось
@@ -147,3 +144,7 @@ int main() {
     }
     return 0;
 }
+
+/*
+3+2*(1*3-2)+2*(1+2*(1*1*1+2*2)+2)+1=
+*/
