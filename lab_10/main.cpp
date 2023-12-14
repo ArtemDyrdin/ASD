@@ -63,7 +63,7 @@ void mergeSort(std::vector<int>& arr, int l, int r) {
 }
 
 int main() {
-    
+
 
     std::vector<int> arr = {12, 11, 13, 5, 6, 7}; // исходная послед-ть эл-ов
 
