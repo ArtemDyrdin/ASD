@@ -24,7 +24,7 @@ void showElements(std::vector<std::vector<int>>& bins, int base) {
 
 // Поразрядная сортировка
 void radixSort(std::vector<int>& numbers) {
-    int max = *max_element(numbers.begin(), numbers.end());
+    int max = *max_element(numbers.begin(), numbers.end()); // максимальный элемент
     int max_number_length = static_cast<int>(std::to_string(max).size()); // разряд наибольшего числа в массиве
     const int base = 10; // основание системы счисления
 
