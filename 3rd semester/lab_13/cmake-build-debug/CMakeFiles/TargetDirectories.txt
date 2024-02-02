@@ -1,0 +1,3 @@
+C:/Users/PAVILION/Desktop/Coding/C++/ASD/lab_13/cmake-build-debug/CMakeFiles/lab_13.dir
+C:/Users/PAVILION/Desktop/Coding/C++/ASD/lab_13/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/PAVILION/Desktop/Coding/C++/ASD/lab_13/cmake-build-debug/CMakeFiles/rebuild_cache.dir
