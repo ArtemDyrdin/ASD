@@ -11,11 +11,12 @@ HANDLE m_hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void drawPoint(std::pair<int, int> &point, int Color) {
     SetConsoleTextAttribute(m_hStdOut, static_cast<int>(Color));
-    SetConsoleCursorPosition(m_hStdOut, {static_cast<short>(point.first * 2 + POINTS), static_cast<short>(point.second)});
+    SetConsoleCursorPosition(m_hStdOut,
+                             {static_cast<short>(point.first * 2 + POINTS), static_cast<short>(point.second)});
     std::cout << '*';
 }
 
-void makeSetPoints(std::vector<std::pair<int, int>>& points) {
+void makeSetPoints(std::vector<std::pair<int, int>> &points) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> distribution(1, POINTS);
@@ -24,11 +25,11 @@ void makeSetPoints(std::vector<std::pair<int, int>>& points) {
         int random_y = distribution(gen);
         points.emplace_back(random_x, random_y);
     }
-    for (auto& point: points)
+    for (auto &point: points)
         drawPoint(point, BLUE);
 }
 
-int orientation(std::pair<int, int>& p, std::pair<int, int>& q, std::pair<int, int>& r) {
+int orientation(std::pair<int, int> &p, std::pair<int, int> &q, std::pair<int, int> &r) {
     int value = (q.second - p.second) * (r.first - q.first) - (q.first - p.first) * (r.second - q.second);
     if (value == 0)
         return 0;
@@ -37,7 +38,7 @@ int orientation(std::pair<int, int>& p, std::pair<int, int>& q, std::pair<int, i
     else return 2;
 }
 
-std::vector<std::pair<int, int>> getConvexHull(std::vector<std::pair<int, int>>& points) {
+std::vector<std::pair<int, int>> getConvexHull(std::vector<std::pair<int, int>> &points) {
     int n = static_cast<int>(points.size());
     if (n < 3) return {};
 
