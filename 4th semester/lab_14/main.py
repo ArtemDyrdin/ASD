@@ -1,26 +1,53 @@
-def rabin_karp_search(text, pattern):
-    n = len(text)
-    m = len(pattern)
-    results = []
+d = 256 # число символов алфавита
 
-    if n < m:
-        return results
+def search(pat, txt, q):
+	M = len(pat)
+	N = len(txt)
+	p = 0 # хеш значение для паттерна
+	t = 0 # хеш значение для текста
+	h = 1
 
-    # Хеш-значение образца и первой подстроки текста
-    pattern_hash = hash(pattern)
-    text_hash = hash(text[:m])
+	# значение h станет "pow(d, M-1)%q"
+	for i in range(M-1):
+		h = (h*d) % q
 
-    for i in range(n - m + 1):
-        # Если хеши совпадают, проверяем на равенство
-        if pattern_hash == text_hash and text[i:i+m] == pattern:
-            results.append(i)
-        # Пересчитываем хеш для следующей подстроки
-        if i < n - m:
-            text_hash = hash(text[i+1:i+1+m])
+	# вычисление хэш-значения шаблона и первого окна текста
+	for i in range(M):
+		p = (d*p + ord(pat[i])) % q
+		t = (d*t + ord(txt[i])) % q
 
-    return results
+	# передвигаем шаблон по тексту
+	for i in range(N-M+1):
+		# Проверяем хэш-значения текущего окна текста и
+        # шаблона, если хэш-значения совпадают, тогда проверяем
+        # символы по одному
+		if p == t:
+			# проверяем символы по одному
+			for j in range(M):
+				if txt[i+j] != pat[j]:
+					break
+				else:
+					j += 1
 
-# Пример использования
-text = "ababcabcababc"
-pattern = "abc"
-print(rabin_karp_search(text, pattern))  # Вывод: [2, 5, 9]
+			# если p == t и pat[0...M-1] = txt[i, i+1, ...i+M-1]
+			if j == M:
+				print("Pattern found at index " + str(i))
+
+		# Вычисляем хэш-значение для следующего окна текста: убираем
+        # ведущий символ, добавляем завершающий символ
+		if i < N-M:
+			t = (d*(t-ord(txt[i])*h) + ord(txt[i+M])) % q
+
+			# Мы можем получить отрицательные значения t, приводим их к
+            # положительным
+			if t < 0:
+				t = t+q
+
+
+if __name__ == '__main__':
+	txt = "ABAAABCD"
+	pat = "ABC"
+
+	q = 101 # простое число
+
+	search(pat, txt, q)
